@@ -50,8 +50,9 @@ for p in temps_500_EG51_FF49:
     print('  -',os.path.basename(p))
 print('\n')
 #%%
-Idc_values = [10.0, 9.0, 8.0, 7.0, 6.0, 5.0]
-H0=[(h*pendiente_HvsI+ordenada_HvsI)/1000 for h in Idc_values]  
+Idc_values = [10.0, 9.0, 8.0, 7.5,7.0, 6.0, 5.0]
+H0=[(h*pendiente_HvsI+ordenada_HvsI)/1000 for h in Idc_values] 
+C = ['C0','C1','C2','C3','C4','C5','C6'] 
 t,t_min=[],[]
 T,T_min=[],[]
 Indx_min,dT=[],[]
@@ -61,7 +62,7 @@ fig,(ax1,ax2) = plt.subplots(2,1,figsize=(10,9),constrained_layout=True)
 ax1.set_title('1.1 - EG 51% FF 49% - LN2 --> RF - Idc = [100, 090, 080] dA',loc='left')
 ax2.set_title('1.2 - EG 51% FF 49% - LN2 --> RF - Idc = [070, 060 , 050] dA',loc='left')
 
-for i,p in enumerate(temps_500_EG51_FF49[:3]):
+for i,p in enumerate(temps_500_EG51_FF49[:4]):
     _,time,temp_CH1, _ = lector_templog(p)
     t.append(time)
     T.append(temp_CH1)
@@ -71,7 +72,7 @@ for i,p in enumerate(temps_500_EG51_FF49[:3]):
     T_min.append(temp_CH1[indx_min])
     Indx_min.append(indx_min[0])
     print(f'Temp minima = {temp_CH1[np.nonzero(temp_CH1==min(temp_CH1))][0]:.1f} C ({temp_CH1[np.nonzero(temp_CH1==min(temp_CH1))][0]+273:.1f} K) alcanzada en {time[np.nonzero(temp_CH1==min(temp_CH1))][0]:.1f} s')
-    ax1.plot(time,temp_CH1,label=f'{H0[i]:.1f} kA/m')
+    ax1.plot(time,temp_CH1,c=C[i],label=f'{H0[i]:.1f} kA/m')
     #ax1.plot(time,(np.gradient(temp_CH1,time)))
 
 for i,p in enumerate(temps_500_EG51_FF49[3:]):
@@ -84,15 +85,15 @@ for i,p in enumerate(temps_500_EG51_FF49[3:]):
     T_min.append(temp_CH1[indx_min])
     Indx_min.append(indx_min[0])
     print(f'Temp minima = {temp_CH1[np.nonzero(temp_CH1==min(temp_CH1))][0]:.1f} C ({temp_CH1[np.nonzero(temp_CH1==min(temp_CH1))][0]+273:.1f} K) alcanzada en {time[np.nonzero(temp_CH1==min(temp_CH1))][0]:.1f} s')
-    ax2.plot(time,temp_CH1,label=f'{H0[i+3]:.1f} kA/m')
+    ax2.plot(time,temp_CH1,c=C[i+3],label=f'{H0[i+3]:.1f} kA/m')
     #ax2.plot(time,(np.gradient(temp_CH1,time)))
 
 for a in (ax1,ax2):
     a.grid()
     a.legend(title='f = 300 kHz',loc='lower right',shadow=True,frameon=True)
     a.set_ylabel('T (°C)')
-ax1.set_xlim(0,140)
-ax2.set_xlim(0,600)
+ax1.set_xlim(0,150)
+ax2.set_xlim(0,500)
 ax2.set_xlabel('t (s)')
 
 #%% Curvatura
@@ -117,7 +118,7 @@ for i,p in enumerate(temps_500_EG51_FF49):
     # ax.plot(t_curv,T_curv,'o')
     # plt.show()
 
-    mask = (T_curv > -158) & (T_curv < 0)
+    mask = (T_curv > -158) & (T_curv < -20)
 
     T_curv = T_curv[mask]
     t_curv = t_curv[mask]
