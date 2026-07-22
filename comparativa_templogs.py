@@ -58,9 +58,9 @@ T,T_min=[],[]
 Indx_min,dT=[],[]
 
 
-fig,(ax1,ax2) = plt.subplots(2,1,figsize=(10,9),constrained_layout=True)
-ax1.set_title('1.1 - EG 51% FF 49% - LN2 --> RF - Idc = [100, 090, 080] dA',loc='left')
-ax2.set_title('1.2 - EG 51% FF 49% - LN2 --> RF - Idc = [070, 060 , 050] dA',loc='left')
+fig1,(ax1,ax2) = plt.subplots(2,1,figsize=(10,9),constrained_layout=True)
+ax1.set_title('1.1 - EG 51% FF 49% - LN2 --> RF - Idc = [100, 090, 080, 075] dA',loc='left')
+ax2.set_title('1.2 - EG 51% FF 49% - LN2 --> RF - Idc = [075, 070, 060 , 050] dA',loc='left')
 
 for i,p in enumerate(temps_500_EG51_FF49[:4]):
     _,time,temp_CH1, _ = lector_templog(p)
@@ -90,14 +90,14 @@ for i,p in enumerate(temps_500_EG51_FF49[3:]):
 
 for a in (ax1,ax2):
     a.grid()
-    a.legend(title='f = 300 kHz',loc='lower right',shadow=True,frameon=True)
+    a.legend(title='f = 300 kHz',loc='lower right',shadow=True,frameon=True,ncol=2)
     a.set_ylabel('T (°C)')
 ax1.set_xlim(0,150)
 ax2.set_xlim(0,500)
 ax2.set_xlabel('t (s)')
 
 #%% Curvatura
-fig25,(ax,ax2,ax3) = plt.subplots(3,1,figsize=(10,10),constrained_layout=True)
+fig2,(ax,ax2,ax3) = plt.subplots(3,1,figsize=(10,10),constrained_layout=True)
 ax.set_title('Temp vs time',loc='left')
 ax2.set_title('Curvatura vs Temp',loc='left')
 ax3.set_title('Curvatura vs Temp',loc='left')
@@ -149,7 +149,7 @@ for a in [ax,ax2,ax3]:
     a.grid()
     a.legend(title='H$_0$ (kA/m)',ncol=2,shadow=True,frameon=True)
 
-plt.suptitle('EG 51% FF 49%\nLN2 --> RF\nIdc = [100, 090, 080, 070, 060, 050]  dA')
+plt.suptitle('EG 51% FF 49%\nLN2 --> RF\nIdc = [100, 090, 080, 075, 070, 060, 050]  dA')
 #%% Ajuste exponencial y bi-exponencial
 # Taux=[]
 # fits_exp=[]
@@ -281,8 +281,8 @@ plt.suptitle('EG 51% FF 49%\nLN2 --> RF\nIdc = [100, 090, 080, 070, 060, 050]  d
 # ax.set_xlim(-170,0)
 # ax.set_ylim(-10,10)
 #%% salvo figuras
-fig.savefig('0_EG51_FF49_LN2_to_RF_150_125_100_075_050_000.png',dpi=300)
-fig25.savefig('1_EG51_FF49_templogs_curvatura.png',dpi=300)
+fig1.savefig('0_EG51_FF49_LN2_to_RF_150_125_100_075_050_000.png',dpi=300)
+fig2.savefig('1_EG51_FF49_templogs_curvatura.png',dpi=300)
 
 # fig2.savefig('2_EG55_FF45_LN2_to_RF_150_125_100.png',dpi=300)
 # fig23.savefig('2_EG55_FF45_grad_temp_150_125_100.png',dpi=300)
